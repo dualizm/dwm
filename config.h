@@ -52,7 +52,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define AltMask Mod1Mask
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -64,17 +64,19 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg_normal, "-nf", fg_normal, "-sb", bg_focus, "-sf", fg_focus, NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
-static const char *browser[]  = { "firefox", NULL };
+static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg_normal, "-nf", fg_normal, "-sb", bg_focus, "-sf", fg_focus, NULL };
+static const char *termcmd[]    = { "alacritty", NULL };
+static const char *browser[]    = { "firefox", NULL };
 static const char *screenshot[] = { "flameshot", "gui", NULL };
+static const char *editor[]     = { "emacs", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-        { MODKEY|AltMask,               XK_b,      spawn,          {.v = browser } },
-        { MODKEY|AltMask,               XK_s,      spawn,          {.v = screenshot } },
+	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+  { MODKEY|AltMask,               XK_b,      spawn,          {.v = browser } },
+  { MODKEY|AltMask,               XK_s,      spawn,          {.v = screenshot } },
+  { MODKEY|AltMask,               XK_e,      spawn,          {.v = editor } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -82,7 +84,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+//	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -106,10 +108,10 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-        { 0,                            XK_F10,    spawn,          SHCMD("wpctl set-mute @DEFAULT_SINK@ toggle") },
-        { 0,                            XK_F11,    spawn,          SHCMD("wpctl set-volume @DEFAULT_SINK@ 5%-") },
-        { 0,                            XK_F12,    spawn,          SHCMD("wpctl set-volume @DEFAULT_SINK@ 5%+") },
-        { 0,                            XK_ISO_Next_Group, spawn,  SHCMD("pkill -RTMIN+1 dwmblocks") },
+  { 0,                            XK_F10,    spawn,          SHCMD("wpctl set-mute @DEFAULT_SINK@ toggle") },
+  { 0,                            XK_F11,    spawn,          SHCMD("wpctl set-volume @DEFAULT_SINK@ 5%-") },
+  { 0,                            XK_F12,    spawn,          SHCMD("wpctl set-volume @DEFAULT_SINK@ 5%+") },
+  { 0,                            XK_ISO_Next_Group, spawn,  SHCMD("pkill -RTMIN+1 dwmblocks") },
 };
 
 /* button definitions */
